@@ -1,0 +1,19 @@
+meta {
+  name: create-one
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/drinks
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "name":"Cerveza Artesanal (sin alcohol)",
+    "price":"4.00",
+    "created_by":"b7a6d6b5-6198-460e-b613-668101d4b5e6"
+  }
+}
