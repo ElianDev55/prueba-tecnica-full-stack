@@ -51,7 +51,12 @@ export class DrinksService {
       if (!drink) {
         throw new NotFoundException('Drink not found');
       }
-      return this.drinksRepository.update(id, updateDrinkDto);
+      await this.drinksRepository.update(id, updateDrinkDto);
+      const updatedDrink = await this.drinksRepository.findOne({
+        where: { id },
+      });
+
+      return updatedDrink;
     } catch (error) {
       throw new InternalServerErrorException(error);
     }

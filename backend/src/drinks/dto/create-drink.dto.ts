@@ -1,19 +1,24 @@
-import { IsDecimal, IsOptional, IsString, IsUUID } from 'class-validator';
+import {
+  IsDecimal,
+  IsDefined,
+  IsNotEmpty,
+  IsString,
+  IsUUID,
+} from 'class-validator';
 
 export class CreateDrinkDto {
-  @IsOptional()
-  @IsUUID()
-  id?: string;
-
-  @IsOptional()
+  @IsDefined()
+  @IsNotEmpty()
   @IsString()
-  name?: string;
+  name: string;
 
-  @IsOptional()
+  @IsDefined()
+  @IsNotEmpty()
   @IsDecimal()
-  price?: number;
+  price: number;
 
-  @IsOptional()
+  @IsDefined()
+  @IsNotEmpty()
   @IsUUID()
-  createdBy?: string;
+  created_by: string;
 }

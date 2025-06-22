@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { databaseConfig } from 'config/database.config';
 import { AdditionalProductsModule } from './additional-products/additional-products.module';
@@ -18,6 +19,7 @@ import { DishesModule } from './dishes/dishes.module';
 import { DishesEntity } from './dishes/entities/dish.entity';
 import { DrinksModule } from './drinks/drinks.module';
 import { DrinksEntity } from './drinks/entities/drink.entity';
+import { ResponseInterceptor } from './interceptors/response.interceptor';
 import { ProductsEntity } from './products/entities/product.entity';
 import { ProductsModule } from './products/products.module';
 import { SaucesEntity } from './sauces/entities/sauce.entity';
@@ -53,6 +55,12 @@ const entities = [
     AdditionalProductsModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: ResponseInterceptor,
+    },
+  ],
 })
 export class AppModule {}

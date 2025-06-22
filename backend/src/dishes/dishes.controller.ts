@@ -6,11 +6,14 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from 'src/guard/auth/auth.guard';
 import { DishesService } from './dishes.service';
 import { CreateDishDto } from './dto/create-dish.dto';
 import { UpdateDishDto } from './dto/update-dish.dto';
 
+@UseGuards(AuthGuard)
 @Controller('dishes')
 export class DishesController {
   constructor(private readonly dishesService: DishesService) {}

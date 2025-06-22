@@ -1,16 +1,19 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from 'src/guard/auth/auth.guard';
 import { BillDetailsService } from './bill-details.service';
 import { CreateBillDetailDto } from './dto/create-bill-detail.dto';
 import { UpdateBillDetailDto } from './dto/update-bill-detail.dto';
 
+@UseGuards(AuthGuard)
 @Controller('bill-details')
 export class BillDetailsController {
   constructor(private readonly billDetailsService: BillDetailsService) {}
