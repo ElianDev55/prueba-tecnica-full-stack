@@ -1,0 +1,33 @@
+import { UserEntity } from 'src/users/entities/user.entity';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+
+@Entity('products')
+export class ProductsEntity {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
+  @Column({ type: 'varchar', nullable: true })
+  name: string;
+
+  @CreateDateColumn({ type: 'timestamp', nullable: true })
+  created_at: Date;
+
+  @UpdateDateColumn({ type: 'timestamp', nullable: true })
+  updated_at: Date;
+
+  @Column({ type: 'boolean', nullable: true })
+  is_deleted: boolean;
+
+  //Relations
+  @ManyToOne(() => UserEntity)
+  @JoinColumn({ name: 'created_by' })
+  created_by: UserEntity;
+}
