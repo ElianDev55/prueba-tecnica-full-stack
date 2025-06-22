@@ -1,26 +1,78 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateDetailsDishDto } from './dto/create-details-dish.dto';
 import { UpdateDetailsDishDto } from './dto/update-details-dish.dto';
+import { DishesDetailsEntity } from './entities/details-dish.entity';
 
 @Injectable()
 export class DetailsDishesService {
-  create(createDetailsDishDto: CreateDetailsDishDto) {
-    return 'This action adds a new detailsDish';
+  constructor(
+    @InjectRepository(DishesDetailsEntity)
+    private detailsDishesRepository: Repository<DishesDetailsEntity>,
+  ) {}
+
+  async create(createDetailsDishDto: CreateDetailsDishDto) {
+    try {
+      const detailsDish =
+        this.detailsDishesRepository.create(createDetailsDishDto);
+      return this.detailsDishesRepository.save(detailsDish);
+    } catch (error) {
+      throw new InternalServerErrorException(error);
+    }
   }
 
-  findAll() {
-    return `This action returns all detailsDishes`;
+  async findAll() {
+    try {
+      return this.detailsDishesRepository.find();
+    } catch (error) {
+      throw new InternalServerErrorException(error);
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} detailsDish`;
+  async findOne(id: string) {
+    try {
+      const detailsDish = await this.detailsDishesRepository.findOne({
+        where: { id },
+      });
+      if (!detailsDish) {
+        throw new NotFoundException('Details dish not found');
+      }
+      return detailsDish;
+    } catch (error) {
+      throw new InternalServerErrorException(error);
+    }
   }
 
-  update(id: number, updateDetailsDishDto: UpdateDetailsDishDto) {
-    return `This action updates a #${id} detailsDish`;
+  async update(id: string, updateDetailsDishDto: UpdateDetailsDishDto) {
+    try {
+      const detailsDish = await this.detailsDishesRepository.findOne({
+        where: { id },
+      });
+      if (!detailsDish) {
+        throw new NotFoundException('Details dish not found');
+      }
+      return this.detailsDishesRepository.update(id, updateDetailsDishDto);
+    } catch (error) {
+      throw new InternalServerErrorException(error);
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} detailsDish`;
+  async remove(id: string) {
+    try {
+      const detailsDish = await this.detailsDishesRepository.findOne({
+        where: { id },
+      });
+      if (!detailsDish) {
+        throw new NotFoundException('Details dish not found');
+      }
+      return this.detailsDishesRepository.delete(id);
+    } catch (error) {
+      throw new InternalServerErrorException(error);
+    }
   }
 }

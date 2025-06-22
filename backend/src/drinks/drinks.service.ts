@@ -1,26 +1,71 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateDrinkDto } from './dto/create-drink.dto';
 import { UpdateDrinkDto } from './dto/update-drink.dto';
+import { DrinksEntity } from './entities/drink.entity';
 
 @Injectable()
 export class DrinksService {
-  create(createDrinkDto: CreateDrinkDto) {
-    return 'This action adds a new drink';
+  constructor(
+    @InjectRepository(DrinksEntity)
+    private drinksRepository: Repository<DrinksEntity>,
+  ) {}
+
+  async create(createDrinkDto: CreateDrinkDto) {
+    try {
+      const drink = this.drinksRepository.create(createDrinkDto);
+      return this.drinksRepository.save(drink);
+    } catch (error) {
+      throw new InternalServerErrorException(error);
+    }
   }
 
-  findAll() {
-    return `This action returns all drinks`;
+  async findAll() {
+    try {
+      return this.drinksRepository.find();
+    } catch (error) {
+      throw new InternalServerErrorException(error);
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} drink`;
+  async findOne(id: string) {
+    try {
+      const drink = await this.drinksRepository.findOne({ where: { id } });
+      if (!drink) {
+        throw new NotFoundException('Drink not found');
+      }
+      return drink;
+    } catch (error) {
+      throw new InternalServerErrorException(error);
+    }
   }
 
-  update(id: number, updateDrinkDto: UpdateDrinkDto) {
-    return `This action updates a #${id} drink`;
+  async update(id: string, updateDrinkDto: UpdateDrinkDto) {
+    try {
+      const drink = await this.drinksRepository.findOne({ where: { id } });
+      if (!drink) {
+        throw new NotFoundException('Drink not found');
+      }
+      return this.drinksRepository.update(id, updateDrinkDto);
+    } catch (error) {
+      throw new InternalServerErrorException(error);
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} drink`;
+  async remove(id: string) {
+    try {
+      const drink = await this.drinksRepository.findOne({ where: { id } });
+      if (!drink) {
+        throw new NotFoundException('Drink not found');
+      }
+      return this.drinksRepository.delete(id);
+    } catch (error) {
+      throw new InternalServerErrorException(error);
+    }
   }
 }

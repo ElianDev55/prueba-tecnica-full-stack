@@ -18,22 +18,24 @@ export class AdditionalProductsController {
   ) {}
 
   @Post()
-  create(@Body() createAdditionalProductDto: CreateAdditionalProductDto) {
-    return this.additionalProductsService.create(createAdditionalProductDto);
+  async create(@Body() createAdditionalProductDto: CreateAdditionalProductDto) {
+    return await this.additionalProductsService.create(
+      createAdditionalProductDto,
+    );
   }
 
   @Get()
-  findAll() {
-    return this.additionalProductsService.findAll();
+  async findAll() {
+    return await this.additionalProductsService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.additionalProductsService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.additionalProductsService.findOne(id);
   }
 
   @Patch(':id')
-  update(
+  async update(
     @Param('id') id: string,
     @Body() updateAdditionalProductDto: UpdateAdditionalProductDto,
   ) {
@@ -44,7 +46,7 @@ export class AdditionalProductsController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.additionalProductsService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.additionalProductsService.remove(id);
   }
 }

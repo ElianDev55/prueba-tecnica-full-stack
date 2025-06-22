@@ -2,7 +2,7 @@ import { AdditionalProductEntity } from 'src/additional-products/entities/additi
 import { ChipsEntity } from 'src/chips/entities/chip.entity';
 import { DishesEntity } from 'src/dishes/entities/dish.entity';
 import { DrinksEntity } from 'src/drinks/entities/drink.entity';
-import { SauceEntity } from 'src/sauces/entities/sauce.entity';
+import { SaucesEntity } from 'src/sauces/entities/sauce.entity';
 import { UserEntity } from 'src/users/entities/user.entity';
 import {
   Column,
@@ -27,9 +27,9 @@ export class BillsDetailEntity {
   @JoinColumn({ name: 'add_id' })
   add_id: AdditionalProductEntity;
 
-  @ManyToOne(() => SauceEntity)
+  @ManyToOne(() => SaucesEntity)
   @JoinColumn({ name: 'souces_id' })
-  souces: SauceEntity;
+  souces: SaucesEntity;
 
   @ManyToOne(() => DrinksEntity)
   @JoinColumn({ name: 'drinks_id' })

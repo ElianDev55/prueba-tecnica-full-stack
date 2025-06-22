@@ -1,26 +1,71 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateSauceDto } from './dto/create-sauce.dto';
 import { UpdateSauceDto } from './dto/update-sauce.dto';
+import { SaucesEntity } from './entities/sauce.entity';
 
 @Injectable()
 export class SaucesService {
-  create(createSauceDto: CreateSauceDto) {
-    return 'This action adds a new sauce';
+  constructor(
+    @InjectRepository(SaucesEntity)
+    private saucesRepository: Repository<SaucesEntity>,
+  ) {}
+
+  async create(createSauceDto: CreateSauceDto) {
+    try {
+      const sauce = this.saucesRepository.create(createSauceDto);
+      return this.saucesRepository.save(sauce);
+    } catch (error) {
+      throw new InternalServerErrorException(error);
+    }
   }
 
-  findAll() {
-    return `This action returns all sauces`;
+  async findAll() {
+    try {
+      return this.saucesRepository.find();
+    } catch (error) {
+      throw new InternalServerErrorException(error);
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} sauce`;
+  async findOne(id: string) {
+    try {
+      const sauce = await this.saucesRepository.findOne({ where: { id } });
+      if (!sauce) {
+        throw new NotFoundException('Sauce not found');
+      }
+      return sauce;
+    } catch (error) {
+      throw new InternalServerErrorException(error);
+    }
   }
 
-  update(id: number, updateSauceDto: UpdateSauceDto) {
-    return `This action updates a #${id} sauce`;
+  async update(id: string, updateSauceDto: UpdateSauceDto) {
+    try {
+      const sauce = await this.saucesRepository.findOne({ where: { id } });
+      if (!sauce) {
+        throw new NotFoundException('Sauce not found');
+      }
+      return this.saucesRepository.update(id, updateSauceDto);
+    } catch (error) {
+      throw new InternalServerErrorException(error);
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} sauce`;
+  async remove(id: string) {
+    try {
+      const sauce = await this.saucesRepository.findOne({ where: { id } });
+      if (!sauce) {
+        throw new NotFoundException('Sauce not found');
+      }
+      return this.saucesRepository.delete(id);
+    } catch (error) {
+      throw new InternalServerErrorException(error);
+    }
   }
 }

@@ -20,6 +20,7 @@ import { DrinksModule } from './drinks/drinks.module';
 import { DrinksEntity } from './drinks/entities/drink.entity';
 import { ProductsEntity } from './products/entities/product.entity';
 import { ProductsModule } from './products/products.module';
+import { SaucesEntity } from './sauces/entities/sauce.entity';
 import { SaucesModule } from './sauces/sauces.module';
 import { UserEntity } from './users/entities/user.entity';
 
@@ -33,6 +34,7 @@ const entities = [
   DrinksEntity,
   AdditionalProductEntity,
   ChipsEntity,
+  SaucesEntity,
 ];
 
 @Module({

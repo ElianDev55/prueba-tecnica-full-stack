@@ -1,11 +1,11 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
 } from '@nestjs/common';
 import { DrinksService } from './drinks.service';
 import { CreateDrinkDto } from './dto/create-drink.dto';
@@ -16,27 +16,30 @@ export class DrinksController {
   constructor(private readonly drinksService: DrinksService) {}
 
   @Post()
-  create(@Body() createDrinkDto: CreateDrinkDto) {
-    return this.drinksService.create(createDrinkDto);
+  async create(@Body() createDrinkDto: CreateDrinkDto) {
+    return await this.drinksService.create(createDrinkDto);
   }
 
   @Get()
-  findAll() {
-    return this.drinksService.findAll();
+  async findAll() {
+    return await this.drinksService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.drinksService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.drinksService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDrinkDto: UpdateDrinkDto) {
-    return this.drinksService.update(+id, updateDrinkDto);
+  async update(
+    @Param('id') id: string,
+    @Body() updateDrinkDto: UpdateDrinkDto,
+  ) {
+    return await this.drinksService.update(id, updateDrinkDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.drinksService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.drinksService.remove(id);
   }
 }

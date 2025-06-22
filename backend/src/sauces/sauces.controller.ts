@@ -1,42 +1,45 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
 } from '@nestjs/common';
-import { SaucesService } from './sauces.service';
 import { CreateSauceDto } from './dto/create-sauce.dto';
 import { UpdateSauceDto } from './dto/update-sauce.dto';
+import { SaucesService } from './sauces.service';
 
 @Controller('sauces')
 export class SaucesController {
   constructor(private readonly saucesService: SaucesService) {}
 
   @Post()
-  create(@Body() createSauceDto: CreateSauceDto) {
-    return this.saucesService.create(createSauceDto);
+  async create(@Body() createSauceDto: CreateSauceDto) {
+    return await this.saucesService.create(createSauceDto);
   }
 
   @Get()
-  findAll() {
-    return this.saucesService.findAll();
+  async findAll() {
+    return await this.saucesService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.saucesService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.saucesService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSauceDto: UpdateSauceDto) {
-    return this.saucesService.update(+id, updateSauceDto);
+  async update(
+    @Param('id') id: string,
+    @Body() updateSauceDto: UpdateSauceDto,
+  ) {
+    return await this.saucesService.update(id, updateSauceDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.saucesService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.saucesService.remove(id);
   }
 }

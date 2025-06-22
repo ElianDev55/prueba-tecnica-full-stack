@@ -1,11 +1,11 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
 } from '@nestjs/common';
 import { ChipsService } from './chips.service';
 import { CreateChipDto } from './dto/create-chip.dto';
@@ -16,27 +16,27 @@ export class ChipsController {
   constructor(private readonly chipsService: ChipsService) {}
 
   @Post()
-  create(@Body() createChipDto: CreateChipDto) {
-    return this.chipsService.create(createChipDto);
+  async create(@Body() createChipDto: CreateChipDto) {
+    return await this.chipsService.create(createChipDto);
   }
 
   @Get()
-  findAll() {
-    return this.chipsService.findAll();
+  async findAll() {
+    return await this.chipsService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.chipsService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.chipsService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateChipDto: UpdateChipDto) {
-    return this.chipsService.update(+id, updateChipDto);
+  async update(@Param('id') id: string, @Body() updateChipDto: UpdateChipDto) {
+    return await this.chipsService.update(id, updateChipDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.chipsService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.chipsService.remove(id);
   }
 }
