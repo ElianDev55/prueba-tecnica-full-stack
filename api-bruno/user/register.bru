@@ -1,0 +1,20 @@
+meta {
+  name: register
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/auth/register
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "name":"Joan Elian Villamarin Urrutia",
+    "email":"jevillaurrutia@gmail.com",
+    "phone":"3158442750",
+    "password":"123"
+  }
+}
