@@ -21,6 +21,11 @@ export class CreateDishDto {
   price: number;
 
   @IsDefined()
+  @IsString()
+  @IsNotEmpty()
+  image: string;
+
+  @IsDefined()
   @IsUUID()
   createdBy: string;
 }

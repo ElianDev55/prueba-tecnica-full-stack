@@ -1,4 +1,10 @@
-import { IsDecimal, IsString, IsUUID } from 'class-validator';
+import {
+  IsDecimal,
+  IsDefined,
+  IsNotEmpty,
+  IsString,
+  IsUUID,
+} from 'class-validator';
 
 export class CreateSauceDto {
   @IsUUID()
@@ -9,6 +15,11 @@ export class CreateSauceDto {
 
   @IsDecimal()
   price?: number;
+
+  @IsDefined()
+  @IsString()
+  @IsNotEmpty()
+  image: string;
 
   @IsUUID()
   createdBy?: string;

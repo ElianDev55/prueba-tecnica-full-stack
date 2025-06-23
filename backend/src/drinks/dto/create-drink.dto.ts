@@ -18,6 +18,11 @@ export class CreateDrinkDto {
   price: number;
 
   @IsDefined()
+  @IsString()
+  @IsNotEmpty()
+  image: string;
+
+  @IsDefined()
   @IsNotEmpty()
   @IsUUID()
   created_by: string;

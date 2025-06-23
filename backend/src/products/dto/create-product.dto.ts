@@ -11,6 +11,11 @@ export class CreateProductDto {
   name: string;
 
   @IsDefined()
+  @IsString()
+  @IsNotEmpty()
+  image: string;
+
+  @IsDefined()
   @IsUUID()
   createdBy: string;
 }

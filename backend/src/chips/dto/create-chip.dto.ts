@@ -21,6 +21,11 @@ export class CreateChipDto {
   price: number;
 
   @IsDefined()
+  @IsString()
+  @IsNotEmpty()
+  image: string;
+
+  @IsDefined()
   @IsUUID()
   createdBy: string;
 }
