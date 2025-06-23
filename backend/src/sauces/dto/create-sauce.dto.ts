@@ -7,14 +7,14 @@ import {
 } from 'class-validator';
 
 export class CreateSauceDto {
-  @IsUUID()
-  id?: string;
-
+  @IsDefined()
   @IsString()
-  name?: string;
+  @IsNotEmpty()
+  name: string;
 
+  @IsDefined()
   @IsDecimal()
-  price?: number;
+  price: number;
 
   @IsDefined()
   @IsString()

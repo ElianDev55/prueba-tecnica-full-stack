@@ -32,7 +32,7 @@ export class BillDetailsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.billDetailsService.findOne(+id);
+    return this.billDetailsService.findOne(id);
   }
 
   @Patch(':id')
@@ -40,11 +40,11 @@ export class BillDetailsController {
     @Param('id') id: string,
     @Body() updateBillDetailDto: UpdateBillDetailDto,
   ) {
-    return this.billDetailsService.update(+id, updateBillDetailDto);
+    return this.billDetailsService.update(id, updateBillDetailDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.billDetailsService.remove(+id);
+    return this.billDetailsService.remove(id);
   }
 }

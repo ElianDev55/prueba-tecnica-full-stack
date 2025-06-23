@@ -4,9 +4,9 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UpdateBillDetailDto } from 'src/bill-details/dto/update-bill-detail.dto';
 import { Repository } from 'typeorm';
 import { CreateBillDto } from './dto/create-bill.dto';
+import { UpdateBillDto } from './dto/update-bill.dto';
 import { BillEntity } from './entities/bill.entity';
 
 @Injectable()
@@ -45,7 +45,7 @@ export class BillsService {
     }
   }
 
-  async update(id: string, updateBillDto: UpdateBillDetailDto) {
+  async update(id: string, updateBillDto: UpdateBillDto) {
     try {
       const bill = await this.billRepository.findOne({ where: { id } });
       if (!bill) {

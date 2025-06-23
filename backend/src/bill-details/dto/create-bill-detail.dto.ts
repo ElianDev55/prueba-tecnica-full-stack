@@ -1,9 +1,9 @@
-import { IsDecimal, IsDefined, IsUUID } from 'class-validator';
+import { IsDecimal, IsDefined, IsOptional, IsUUID } from 'class-validator';
 
 export class CreateBillDetailDto {
-  @IsDefined()
+  @IsOptional()
   @IsUUID()
-  id: string;
+  id?: string;
 
   @IsDefined()
   @IsUUID()

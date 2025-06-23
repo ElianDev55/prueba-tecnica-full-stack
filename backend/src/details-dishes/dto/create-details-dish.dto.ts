@@ -1,9 +1,9 @@
-import { IsDefined, IsUUID } from 'class-validator';
+import { IsDefined, IsOptional, IsUUID } from 'class-validator';
 
 export class CreateDetailsDishDto {
-  @IsDefined()
+  @IsOptional()
   @IsUUID()
-  id: string;
+  id?: string;
 
   @IsDefined()
   @IsUUID()

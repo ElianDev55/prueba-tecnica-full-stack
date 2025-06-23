@@ -8,10 +8,6 @@ import {
 
 export class CreateChipDto {
   @IsDefined()
-  @IsUUID()
-  id: string;
-
-  @IsDefined()
   @IsString()
   @IsNotEmpty()
   name: string;
