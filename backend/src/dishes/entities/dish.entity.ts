@@ -20,6 +20,9 @@ export class DishesEntity {
   @Column({ type: 'decimal', nullable: true })
   price: number;
 
+  @Column({ type: 'varchar', length: 255, nullable: true })
+  image: string;
+
   @Column({ type: 'uuid', nullable: true })
   @CreateDateColumn({ type: 'timestamp', nullable: true })
   created_at: Date;
