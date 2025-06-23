@@ -8,11 +8,13 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
+import { ApiBearerAuth } from '@nestjs/swagger';
 import { AuthGuard } from 'src/guard/auth/auth.guard';
 import { CreateSauceDto } from './dto/create-sauce.dto';
 import { UpdateSauceDto } from './dto/update-sauce.dto';
 import { SaucesService } from './sauces.service';
 
+@ApiBearerAuth()
 @UseGuards(AuthGuard)
 @Controller('sauces')
 export class SaucesController {

@@ -6,11 +6,16 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
+import { ApiBearerAuth } from '@nestjs/swagger';
+import { AuthGuard } from 'src/guard/auth/auth.guard';
 import { AdditionalProductsService } from './additional-products.service';
 import { CreateAdditionalProductDto } from './dto/create-additional-product.dto';
 import { UpdateAdditionalProductDto } from './dto/update-additional-product.dto';
 
+@ApiBearerAuth()
+@UseGuards(AuthGuard)
 @Controller('additional-products')
 export class AdditionalProductsController {
   constructor(

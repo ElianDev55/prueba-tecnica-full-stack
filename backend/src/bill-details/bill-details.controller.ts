@@ -8,11 +8,13 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
+import { ApiBearerAuth } from '@nestjs/swagger';
 import { AuthGuard } from 'src/guard/auth/auth.guard';
 import { BillDetailsService } from './bill-details.service';
 import { CreateBillDetailDto } from './dto/create-bill-detail.dto';
 import { UpdateBillDetailDto } from './dto/update-bill-detail.dto';
 
+@ApiBearerAuth()
 @UseGuards(AuthGuard)
 @Controller('bill-details')
 export class BillDetailsController {

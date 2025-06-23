@@ -8,11 +8,12 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
+import { ApiBearerAuth } from '@nestjs/swagger';
 import { AuthGuard } from 'src/guard/auth/auth.guard';
 import { ChipsService } from './chips.service';
 import { CreateChipDto } from './dto/create-chip.dto';
 import { UpdateChipDto } from './dto/update-chip.dto';
-
+@ApiBearerAuth()
 @UseGuards(AuthGuard)
 @Controller('chips')
 export class ChipsController {

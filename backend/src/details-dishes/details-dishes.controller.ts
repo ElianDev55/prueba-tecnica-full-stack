@@ -8,11 +8,12 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
+import { ApiBearerAuth } from '@nestjs/swagger';
 import { AuthGuard } from 'src/guard/auth/auth.guard';
 import { DetailsDishesService } from './details-dishes.service';
 import { CreateDetailsDishDto } from './dto/create-details-dish.dto';
 import { UpdateDetailsDishDto } from './dto/update-details-dish.dto';
-
+@ApiBearerAuth()
 @UseGuards(AuthGuard)
 @Controller('details-dishes')
 export class DetailsDishesController {
