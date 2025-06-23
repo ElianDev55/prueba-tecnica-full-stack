@@ -25,6 +25,7 @@ import { ProductsModule } from './products/products.module';
 import { SaucesEntity } from './sauces/entities/sauce.entity';
 import { SaucesModule } from './sauces/sauces.module';
 import { UserEntity } from './users/entities/user.entity';
+import { SendGridModule } from './send-grid/send-grid.module';
 
 const entities = [
   UserEntity,
@@ -53,6 +54,7 @@ const entities = [
     SaucesModule,
     ChipsModule,
     AdditionalProductsModule,
+    SendGridModule,
   ],
   controllers: [AppController],
   providers: [

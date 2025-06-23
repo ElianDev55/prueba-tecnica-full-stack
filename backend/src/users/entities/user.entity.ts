@@ -23,6 +23,9 @@ export class UserEntity {
   @Column()
   password: string;
 
+  @Column({ type: 'varchar', nullable: true })
+  address: string;
+
   @CreateDateColumn({ type: 'timestamp', nullable: true })
   created_at: Date;
 
