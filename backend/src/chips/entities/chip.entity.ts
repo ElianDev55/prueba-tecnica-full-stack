@@ -20,6 +20,9 @@ export class ChipsEntity {
   @Column({ type: 'decimal', precision: 10, scale: 2, nullable: true })
   price: number;
 
+  @Column({ type: 'varchar', length: 255, nullable: true })
+  image: string;
+
   @CreateDateColumn({ type: 'timestamp', nullable: true })
   created_at: Date;
 
