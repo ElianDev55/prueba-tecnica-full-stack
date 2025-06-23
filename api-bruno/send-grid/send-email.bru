@@ -1,0 +1,34 @@
+meta {
+  name: send-email
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/send-grid/
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "to": "jevillaurrutia@gmail.com",
+    "from": "jevillaurrutia@gmail.com",
+    "subject": "Sending with SendGrid is Fun",
+    "text": "and easy to do anywhere, even with Node.js",
+    "templateId": "d-c9297b3d243840f383d20ea7884b06fb",
+    "dynamicTemplateData": {
+      "user": {
+        "name": "Joan Elian",
+        "phone": "+57 3001234567",
+        "email": "joan@ejemplo.com",
+        "address": "Cra 7 #45-89, Bogotá, Colombia"
+      },
+      "products": [
+        { "name": "Té Helado", "quantity": 2, "price": 3.5 },
+        { "name": "Sushi Roll", "quantity": 1, "price": 9.0 }
+      ],
+      "total": 16.0
+    }
+  }
+}
