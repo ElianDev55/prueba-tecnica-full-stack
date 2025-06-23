@@ -22,5 +22,5 @@ export class CreateSauceDto {
   image: string;
 
   @IsUUID()
-  createdBy?: string;
+  created_by: string;
 }

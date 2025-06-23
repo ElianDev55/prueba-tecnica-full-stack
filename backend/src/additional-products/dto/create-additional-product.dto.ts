@@ -18,5 +18,5 @@ export class CreateAdditionalProductDto {
 
   @IsDefined()
   @IsUUID()
-  createdBy: string;
+  created_by: string;
 }

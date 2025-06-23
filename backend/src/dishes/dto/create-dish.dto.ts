@@ -23,5 +23,5 @@ export class CreateDishDto {
 
   @IsDefined()
   @IsUUID()
-  createdBy: string;
+  created_by: string;
 }

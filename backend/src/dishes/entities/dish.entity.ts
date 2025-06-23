@@ -34,8 +34,9 @@ export class DishesEntity {
   is_deleted: boolean;
 
   //Relations
+
   @Column({ type: 'uuid', nullable: true })
   @ManyToOne(() => UserEntity)
   @JoinColumn({ name: 'created_by' })
-  created_by: UserEntity;
+  created_by: string;
 }

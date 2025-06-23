@@ -35,5 +35,5 @@ export class CreateBillDetailDto {
 
   @IsDefined()
   @IsUUID()
-  createdBy: string;
+  created_by: string;
 }

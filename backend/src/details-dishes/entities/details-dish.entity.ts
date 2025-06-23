@@ -18,7 +18,7 @@ export class DishesDetailsEntity {
 
   @ManyToOne(() => UserEntity)
   @JoinColumn({ name: 'created_by' })
-  created_by: UserEntity;
+  created_by: string;
 
   @ManyToOne(() => DishesEntity)
   @JoinColumn({ name: 'dishes_id' })

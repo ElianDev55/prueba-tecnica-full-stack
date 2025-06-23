@@ -1,4 +1,4 @@
-import { IsBoolean, IsDefined, IsOptional, IsUUID } from 'class-validator';
+import { IsDefined, IsOptional, IsUUID } from 'class-validator';
 
 export class CreateBillDto {
   @IsOptional()
@@ -10,10 +10,6 @@ export class CreateBillDto {
   billDetailsId: string;
 
   @IsDefined()
-  @IsBoolean()
-  isDeleted: boolean;
-
-  @IsDefined()
   @IsUUID()
-  createdBy: string;
+  created_by: string;
 }

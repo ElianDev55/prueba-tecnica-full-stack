@@ -7,7 +7,7 @@ export class CreateDetailsDishDto {
 
   @IsDefined()
   @IsUUID()
-  createdBy: string;
+  created_by: string;
 
   @IsDefined()
   @IsUUID()

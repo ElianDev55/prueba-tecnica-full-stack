@@ -45,6 +45,19 @@ export class BillsService {
     }
   }
 
+  async findByUserId(userId: string) {
+    try {
+      const bills = await this.billRepository.find({
+        where: { created_by: userId },
+        relations: ['billDetails'],
+      });
+
+      return bills;
+    } catch (error) {
+      throw new InternalServerErrorException(error);
+    }
+  }
+
   async update(id: string, updateBillDto: UpdateBillDto) {
     try {
       const bill = await this.billRepository.findOne({ where: { id } });

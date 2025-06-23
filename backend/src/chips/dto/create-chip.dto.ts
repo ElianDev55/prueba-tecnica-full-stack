@@ -23,5 +23,5 @@ export class CreateChipDto {
 
   @IsDefined()
   @IsUUID()
-  createdBy: string;
+  created_by: string;
 }

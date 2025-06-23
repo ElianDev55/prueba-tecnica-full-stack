@@ -31,5 +31,5 @@ export class BillEntity {
   // Relations
   @ManyToOne(() => UserEntity)
   @JoinColumn({ name: 'created_by' })
-  created_by: UserEntity;
+  created_by: string;
 }
