@@ -1,6 +1,9 @@
 
 import type React from "react"
 import { useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
+import Swal from "sweetalert2"
+import { useLogin } from "../hooks/useAutorization"
 
 interface LoginForm {
   email: string
@@ -8,6 +11,10 @@ interface LoginForm {
 }
 
 export default function LoginPage() {
+
+  const { login, loading, error } = useLogin()
+  const navigate = useNavigate()
+
   const [formData, setFormData] = useState<LoginForm>({
     email: "",
     password: "",
@@ -56,9 +63,23 @@ export default function LoginPage() {
     setIsLoading(true)
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1500))
-      console.log("Login data:", formData)
-      alert("Login successful! 🎉")
+      const response = await login(formData)
+      console.log("Login response:", response)
+      if (response.status === 201) {
+        Swal.fire({
+          title: "Login successful!",
+          icon: "success",
+          draggable: true
+        });
+        localStorage.setItem('token', response.data.token);
+        navigate("/home")
+      } else if (response.status === 400) {
+        Swal.fire({
+          title: response.message,
+          icon: "error",
+          draggable: true
+        });
+      }
     } catch (error) {
       console.error("Login error:", error)
       alert("Login failed. Please try again.")
@@ -142,9 +163,9 @@ export default function LoginPage() {
           <div className="mt-6 text-center">
             <p className="text-gray-600">
               Don't have an account?{" "}
-              <a href="/register" className="text-cyan-500 hover:text-cyan-600 font-medium">
+              <Link to="/register" className="text-cyan-500 hover:text-cyan-600 font-medium">
                 Sign Up
-              </a>
+              </Link>
             </p>
           </div>
         </div>

@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { Link } from "react-router-dom"
 import shoppingCart from "../assets/shopping-cart.svg"
 import CartSidebar from "./shopping-car"
 
@@ -58,18 +59,18 @@ export default function Navbar() {
 
             {/* Enlaces centrales - Desktop */}
             <div className="hidden md:flex items-center space-x-8">
-              <a
-                href="#bills"
+              <Link
+                to="/bills"
                 className="text-cyan-500 hover:text-cyan-600 px-3 py-2 rounded-md text-lg font-medium transition-colors duration-200 hover:bg-cyan-50"
               >
                 Bills
-              </a>
-              <a
-                href="#profile"
+              </Link>
+              <Link
+                to="/profile"
                 className="text-cyan-500 hover:text-cyan-600 px-3 py-2 rounded-md text-lg font-medium transition-colors duration-200 hover:bg-cyan-50"
               >
                 Profile
-              </a>
+              </Link>
             </div>
 
             {/* Carrito y Logout - Derecha Desktop */}

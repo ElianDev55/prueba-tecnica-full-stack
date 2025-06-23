@@ -1,3 +1,4 @@
+import Navbar from "../components/navbar";
 import { useGetDishes } from "../hooks/useDishes";
 import { GridLayout } from "../layouts/grid-layout";
 
@@ -8,8 +9,11 @@ export const Home = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div>
-      <GridLayout card={dishes.data} title="Delicious Dishes" />
-    </div>
+    <>
+      <Navbar />
+      <div>
+        <GridLayout card={dishes.data} title="Delicious Dishes" />
+      </div>
+    </>
   );
 };
