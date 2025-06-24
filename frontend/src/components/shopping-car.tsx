@@ -186,6 +186,8 @@ export default function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
       }
     });
 
+    console.log(data, 'data');
+
 
     Swal.fire({
       title: "¡Pedido listo para procesar!",
