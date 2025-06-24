@@ -4,7 +4,8 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DataSource, Repository } from 'typeorm';
+import { BillsDetailEntity } from 'src/bill-details/entities/bill-detail.entity';
+import { DataSource, In, Repository } from 'typeorm';
 import { CreateBillDto } from './dto/create-bill.dto';
 import { UpdateBillDto } from './dto/update-bill.dto';
 import { BillEntity } from './entities/bill.entity';
@@ -14,6 +15,8 @@ export class BillsService {
   constructor(
     @InjectRepository(BillEntity)
     private billRepository: Repository<BillEntity>,
+    @InjectRepository(BillsDetailEntity)
+    private billDetailRepository: Repository<BillsDetailEntity>,
     private dataSource: DataSource,
   ) {}
 
@@ -49,23 +52,20 @@ export class BillsService {
   async findByUserId(userId: string) {
     try {
       const bills = await this.billRepository.find({
-        relations: [
-          'billDetails',
-          'billDetails.diches',
-          'billDetails.add',
-          'billDetails.souces',
-          'billDetails.drinks',
-          'billDetails.chips',
-        ],
         where: { createdBy: { id: userId } },
       });
       console.log(bills);
+
+      const billDetails = await this.billDetailRepository.find({
+        where: { bill_id: In(bills.map((bill) => bill.id)) },
+        relations: ['diches', 'add', 'souces', 'drinks', 'chips'],
+      });
 
       if (bills.length === 0) {
         throw new NotFoundException('No bills found');
       }
 
-      return bills;
+      return billDetails;
     } catch (error) {
       throw new InternalServerErrorException(error);
     }

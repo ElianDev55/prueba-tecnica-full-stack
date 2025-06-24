@@ -1,4 +1,5 @@
 import { AdditionalProductEntity } from 'src/additional-products/entities/additional-product.entity';
+import { BillEntity } from 'src/bills/entities/bill.entity';
 import { ChipsEntity } from 'src/chips/entities/chip.entity';
 import { DishesEntity } from 'src/dishes/entities/dish.entity';
 import { DrinksEntity } from 'src/drinks/entities/drink.entity';
@@ -18,6 +19,13 @@ import {
 export class BillsDetailEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
+
+  @Column({ type: 'uuid', nullable: true })
+  bill_id: string;
+
+  @ManyToOne(() => BillEntity)
+  @JoinColumn({ name: 'bill_id' })
+  bill: BillEntity;
 
   @Column({ type: 'uuid', nullable: true })
   diches_id: string;

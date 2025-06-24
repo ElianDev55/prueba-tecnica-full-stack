@@ -6,10 +6,6 @@ export class CreateBillDto {
   id?: string;
 
   @IsDefined()
-  @IsUUID()
-  bill_details_id: string;
-
-  @IsDefined()
   @IsDecimal()
   total: number;
 

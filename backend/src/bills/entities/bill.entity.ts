@@ -1,4 +1,3 @@
-import { BillsDetailEntity } from 'src/bill-details/entities/bill-detail.entity';
 import { UserEntity } from 'src/users/entities/user.entity';
 import {
   Column,
@@ -14,13 +13,6 @@ import {
 export class BillEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
-
-  @Column({ type: 'uuid', nullable: true })
-  bill_details_id: string;
-
-  @ManyToOne(() => BillsDetailEntity)
-  @JoinColumn({ name: 'bill_details_id' })
-  billDetails: BillsDetailEntity;
 
   @Column({ type: 'decimal', precision: 10, scale: 2, nullable: true })
   total: number;

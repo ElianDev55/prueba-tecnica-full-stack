@@ -7,6 +7,10 @@ export class CreateBillDetailDto {
 
   @IsDefined()
   @IsUUID()
+  bill_id: string;
+
+  @IsDefined()
+  @IsUUID()
   add_id: string;
 
   @IsDefined()
