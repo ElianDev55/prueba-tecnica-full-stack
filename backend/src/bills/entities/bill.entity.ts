@@ -15,9 +15,15 @@ export class BillEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Column({ type: 'uuid', nullable: true })
+  bill_details_id: string;
+
   @ManyToOne(() => BillsDetailEntity)
   @JoinColumn({ name: 'bill_details_id' })
   billDetails: BillsDetailEntity;
+
+  @Column({ type: 'decimal', precision: 10, scale: 2, nullable: true })
+  total: number;
 
   @CreateDateColumn({ type: 'timestamp', nullable: true })
   created_at: Date;
@@ -29,7 +35,11 @@ export class BillEntity {
   is_deleted: boolean;
 
   // Relations
+
+  @Column({ type: 'uuid', nullable: true })
+  created_by: string;
+
   @ManyToOne(() => UserEntity)
   @JoinColumn({ name: 'created_by' })
-  created_by: string;
+  createdBy: UserEntity;
 }

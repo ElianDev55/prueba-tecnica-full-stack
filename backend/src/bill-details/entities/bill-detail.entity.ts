@@ -19,29 +19,40 @@ export class BillsDetailEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Column({ type: 'uuid', nullable: true })
+  diches_id: string;
+
   @ManyToOne(() => DishesEntity)
   @JoinColumn({ name: 'diches_id' })
   diches: DishesEntity;
 
+  @Column({ type: 'uuid', nullable: true })
+  add_id: string;
+
   @ManyToOne(() => AdditionalProductEntity)
   @JoinColumn({ name: 'add_id' })
-  add_id: AdditionalProductEntity;
+  add: AdditionalProductEntity;
+
+  @Column({ type: 'uuid', nullable: true })
+  souces_id: string;
 
   @ManyToOne(() => SaucesEntity)
   @JoinColumn({ name: 'souces_id' })
   souces: SaucesEntity;
 
+  @Column({ type: 'uuid', nullable: true })
+  drinks_id: string;
+
   @ManyToOne(() => DrinksEntity)
   @JoinColumn({ name: 'drinks_id' })
   drinks: DrinksEntity;
 
+  @Column({ type: 'uuid', nullable: true })
+  chips_id: string;
+
   @ManyToOne(() => ChipsEntity)
   @JoinColumn({ name: 'chips_id' })
   chips: ChipsEntity;
-
-  @ManyToOne(() => AdditionalProductEntity)
-  @JoinColumn({ name: 'additional_products_id' })
-  additionalProducts: AdditionalProductEntity;
 
   @Column({ type: 'decimal', precision: 10, scale: 2, nullable: true })
   total: number;
