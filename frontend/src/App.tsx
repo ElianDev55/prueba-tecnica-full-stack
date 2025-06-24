@@ -1,5 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { Bills } from "./pages/bills";
+import { Bills } from "./pages/bill";
 import { Home } from "./pages/home";
 import Login from "./pages/login";
 import { Profile } from "./pages/profile";

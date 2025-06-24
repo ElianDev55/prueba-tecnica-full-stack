@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import shoppingCart from "../assets/shopping-cart.svg"
 import CartSidebar from "./shopping-car"
 
@@ -12,38 +12,18 @@ interface CartItem {
 }
 
 export default function Navbar() {
+  const navigate = useNavigate()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isCartOpen, setIsCartOpen] = useState(false)
-  const [cartItems, setCartItems] = useState<CartItem[]>([
-    // Items de ejemplo
-    {
-      id: "690c29e6-f659-4e52-8dae-efeae2a1d42f",
-      name: "Doble Búfalo",
-      price: "12",
-      image: "https://tofuu.getjusto.com/orioneat-local/resized2/4bHNuNWKBkeLzW3S9-300-x.webp",
-      quantity: 2,
-    },
-  ])
+  
 
   const handleLogout = () => {
+    localStorage.removeItem("token")
+    localStorage.removeItem("user")
+    navigate("/login")
     console.log("Cerrando sesión...")
   }
 
-  const updateQuantity = (id: string, quantity: number) => {
-    if (quantity === 0) {
-      removeItem(id)
-    } else {
-      setCartItems((items) => items.map((item) => (item.id === id ? { ...item, quantity } : item)))
-    }
-  }
-
-  const removeItem = (id: string) => {
-    setCartItems((items) => items.filter((item) => item.id !== id))
-  }
-
-  const getTotalItems = () => {
-    return cartItems.reduce((total, item) => total + item.quantity, 0)
-  }
 
   return (
     <>
@@ -59,6 +39,12 @@ export default function Navbar() {
 
             {/* Enlaces centrales - Desktop */}
             <div className="hidden md:flex items-center space-x-8">
+              <Link
+                to="/home"
+                className="text-cyan-500 hover:text-cyan-600 px-3 py-2 rounded-md text-lg font-medium transition-colors duration-200 hover:bg-cyan-50"
+              >
+                Home
+              </Link>
               <Link
                 to="/bills"
                 className="text-cyan-500 hover:text-cyan-600 px-3 py-2 rounded-md text-lg font-medium transition-colors duration-200 hover:bg-cyan-50"
@@ -82,11 +68,7 @@ export default function Navbar() {
               >
                 <img src={shoppingCart} alt="Carrito" className="w-6 h-6" />
                 {/* Badge con número de items */}
-                {getTotalItems() > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-6 w-6 flex items-center justify-center font-bold">
-                    {getTotalItems()}
-                  </span>
-                )}
+                
               </button>
 
               <button
@@ -112,11 +94,6 @@ export default function Navbar() {
                     d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m6-5v5a2 2 0 11-4 0v-5m4 0V8a2 2 0 10-4 0v5.01"
                   />
                 </svg>
-                {getTotalItems() > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">
-                    {getTotalItems()}
-                  </span>
-                )}
               </button>
 
               <button
@@ -171,9 +148,6 @@ export default function Navbar() {
       <CartSidebar
         isOpen={isCartOpen}
         onClose={() => setIsCartOpen(false)}
-        cartItems={cartItems}
-        onUpdateQuantity={updateQuantity}
-        onRemoveItem={removeItem}
       />
     </>
   )

@@ -72,6 +72,7 @@ export default function LoginPage() {
           draggable: true
         });
         localStorage.setItem('token', response.data.token);
+        localStorage.setItem('user', response.data.id);
         navigate("/home")
       } else if (response.status === 400) {
         Swal.fire({

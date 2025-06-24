@@ -1,23 +1,19 @@
 import { useEffect, useState } from 'react';
-import type { BillsByUserResponse } from '../interfaces/bill-by-user.interface';
 
-export const useGetBillsByUser = () => {
-  const [bills, setBills] = useState<BillsByUserResponse>({
-    data: [],
-    date: '',
-    status: 0,
-  });
+export const usePostBillDetails = (bill: any) => {
+  const [billDetails, setBillDetails] = useState<any>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
   useEffect(() => {
-    const fetchBillsByUser = async () => {
+    const postBillDetails = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/bills/user/${localStorage.getItem('user')}`, {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/details-dishes`, {
           headers: {
+            method: 'POST',
             Authorization: `Bearer ${localStorage.getItem('token')}`,
             'Content-Type': 'application/json',
           },
+          body: JSON.stringify(bill),
         });
 
         if (!response.ok) {
@@ -25,7 +21,7 @@ export const useGetBillsByUser = () => {
         }
 
         const data = await response.json();
-        setBills(data);
+        setBillDetails(data);
       } catch (err: any) {
         setError(err.message || 'Algo salió mal');
       } finally {
@@ -33,10 +29,10 @@ export const useGetBillsByUser = () => {
       }
     };
 
-    fetchBillsByUser();
+    postBillDetails();
   }, []);
 
-  return { bills, loading, error };
+  return { billDetails, loading, error };
 };
 
 export const usePostBill = () => {
