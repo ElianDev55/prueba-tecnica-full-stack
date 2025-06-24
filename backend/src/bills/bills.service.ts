@@ -54,19 +54,33 @@ export class BillsService {
       const bills = await this.billRepository.find({
         where: { createdBy: { id: userId } },
       });
-      console.log(bills);
-
-      const billDetails = await this.billDetailRepository.find({
-        where: { bill_id: In(bills.map((bill) => bill.id)) },
-        relations: ['diches', 'add', 'souces', 'drinks', 'chips'],
-      });
 
       if (bills.length === 0) {
         throw new NotFoundException('No bills found');
       }
 
-      return billDetails;
+      const billDetails = await this.billDetailRepository.find({
+        where: { bill_id: In(bills.map((bill) => bill.id)) },
+        relations: ['diches', 'add', 'souces', 'drinks', 'chips', 'bill'],
+      });
+
+      const groupedDetails = billDetails.reduce(
+        (acc, detail) => {
+          const dichesId = detail.diches?.id;
+          if (dichesId) {
+            if (!acc[dichesId]) {
+              acc[dichesId] = [];
+            }
+            acc[dichesId].push(detail);
+          }
+          return acc;
+        },
+        {} as Record<string, BillsDetailEntity[]>,
+      );
+
+      return groupedDetails;
     } catch (error) {
+      console.log(error);
       throw new InternalServerErrorException(error);
     }
   }

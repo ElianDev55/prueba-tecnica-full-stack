@@ -8,6 +8,7 @@ import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { UsersService } from 'src/users/users.service';
+import { jwtConstants } from './constants';
 import { LoginDto } from './dto/login.dto';
 
 @Injectable()
@@ -46,6 +47,17 @@ export class AuthService {
       id: user.id,
       token: this.jwtService.sign(payload),
     };
+  }
+
+  async validateToken(token: string) {
+    try {
+      const payload = await this.jwtService.verifyAsync(token, {
+        secret: jwtConstants.secret,
+      });
+      return payload;
+    } catch (error) {
+      throw new UnauthorizedException('Invalid token');
+    }
   }
 
   async register(createUserDto: CreateUserDto) {

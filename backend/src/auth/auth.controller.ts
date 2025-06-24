@@ -29,6 +29,23 @@ export class AuthController {
     return this.authService.login(loginDto);
   }
 
+  @Post('validate-token')
+  @ApiOperation({ summary: 'Validar token' })
+  @ApiBody({
+    type: String,
+    examples: {
+      a: {
+        summary: 'Ejemplo de peticion',
+        value: 'token123',
+      },
+    },
+  })
+  @ApiResponse({ status: 200, description: 'Token validado.' })
+  @ApiResponse({ status: 401, description: 'No autorizado.' })
+  validateToken(@Body() token: string) {
+    return this.authService.validateToken(token);
+  }
+
   @Post('register')
   @ApiOperation({ summary: 'Registrar un nuevo usuario' })
   @ApiBody({

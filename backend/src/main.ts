@@ -13,10 +13,12 @@ async function bootstrap() {
   app.useGlobalPipes(
     new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }),
   );
+  // Permitir acceso total a la API desde cualquier origen y sin restricciones
   app.enableCors({
-    origin: '*',
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    origin: true,
+    methods: '*',
+    allowedHeaders: '*',
+    credentials: true,
   });
 
   const config = new DocumentBuilder()

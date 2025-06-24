@@ -1,33 +1,37 @@
-import { IsDecimal, IsDefined, IsUUID } from 'class-validator';
+import { IsDecimal, IsDefined, IsOptional, IsUUID } from 'class-validator';
 
 export class CreateBillDetailDto {
-  @IsDefined()
   @IsUUID()
-  diches_id: string;
+  @IsOptional()
+  id?: string;
 
-  @IsDefined()
   @IsUUID()
-  bill_id: string;
+  @IsOptional()
+  diches_id?: string;
 
-  @IsDefined()
   @IsUUID()
-  add_id: string;
+  @IsOptional()
+  bill_id?: string;
 
-  @IsDefined()
   @IsUUID()
-  souces_id: string;
+  @IsOptional()
+  add_id?: string;
 
-  @IsDefined()
   @IsUUID()
-  drinks_id: string;
+  @IsOptional()
+  souces_id?: string;
 
-  @IsDefined()
   @IsUUID()
-  chips_id: string;
+  @IsOptional()
+  drinks_id?: string;
 
-  @IsDefined()
+  @IsUUID()
+  @IsOptional()
+  chips_id?: string;
+
+  @IsOptional()
   @IsDecimal()
-  total: number;
+  total?: number;
 
   @IsDefined()
   @IsUUID()

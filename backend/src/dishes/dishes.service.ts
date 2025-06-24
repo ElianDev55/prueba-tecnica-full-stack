@@ -4,6 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { DishesDetailsEntity } from 'src/details-dishes/entities/details-dish.entity';
 import { Repository } from 'typeorm';
 import { CreateDishDto } from './dto/create-dish.dto';
 import { UpdateDishDto } from './dto/update-dish.dto';
@@ -14,6 +15,9 @@ export class DishesService {
   constructor(
     @InjectRepository(DishesEntity)
     private dishesRepository: Repository<DishesEntity>,
+
+    @InjectRepository(DishesDetailsEntity)
+    private dishesDetailsRepository: Repository<DishesDetailsEntity>,
   ) {}
 
   async create(createDishDto: CreateDishDto) {
@@ -27,7 +31,29 @@ export class DishesService {
 
   async findAll() {
     try {
-      return this.dishesRepository.find();
+      const dishesDetails = await this.dishesDetailsRepository.find({
+        relations: ['dishes_id', 'products_id'],
+      });
+
+      const grouped: {
+        [key: string]: (typeof dishesDetails)[number]['dishes_id'] & {
+          products: any[];
+        };
+      } = {};
+
+      for (const detail of dishesDetails) {
+        const dishId = detail.dishes_id.id;
+        if (!grouped[dishId]) {
+          grouped[dishId] = {
+            ...detail.dishes_id,
+            products: [],
+          };
+        }
+        grouped[dishId].products.push(detail.products_id);
+      }
+
+      // Retornar como array
+      return Object.values(grouped);
     } catch (error) {
       throw new InternalServerErrorException(error);
     }
