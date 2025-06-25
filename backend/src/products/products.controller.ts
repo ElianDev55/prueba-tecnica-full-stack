@@ -29,12 +29,16 @@ export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
   @Post()
-  @ApiOperation({ summary: 'Crear un nuevo producto' })
+  @ApiOperation({
+    summary: 'Crear un nuevo producto',
+    description:
+      'Crea un nuevo producto en el sistema. Requiere autenticación.',
+  })
   @ApiBody({
     type: CreateProductDto,
     examples: {
-      a: {
-        summary: 'Ejemplo de peticion',
+      producto: {
+        summary: 'Ejemplo de petición',
         value: {
           name: 'Producto de prueba',
           image: 'https://www.example.com/image.png',
@@ -46,6 +50,16 @@ export class ProductsController {
   @ApiResponse({
     status: 201,
     description: 'El producto ha sido creado exitosamente.',
+    schema: {
+      example: {
+        id: 'uuid-v4',
+        name: 'Producto de prueba',
+        image: 'https://www.example.com/image.png',
+        created_by: 'a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6',
+        createdAt: '2024-01-20T12:00:00Z',
+        updatedAt: '2024-01-20T12:00:00Z',
+      },
+    },
   })
   @ApiResponse({ status: 403, description: 'Prohibido.' })
   async create(@Body() createProductDto: CreateProductDto) {
@@ -53,10 +67,26 @@ export class ProductsController {
   }
 
   @Get()
-  @ApiOperation({ summary: 'Obtener todos los productos' })
+  @ApiOperation({
+    summary: 'Obtener todos los productos',
+    description:
+      'Retorna la lista de todos los productos registrados. Requiere autenticación.',
+  })
   @ApiResponse({
     status: 200,
     description: 'Lista de todos los productos.',
+    schema: {
+      example: [
+        {
+          id: 'uuid-v4',
+          name: 'Producto de prueba',
+          image: 'https://www.example.com/image.png',
+          created_by: 'a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6',
+          createdAt: '2024-01-20T12:00:00Z',
+          updatedAt: '2024-01-20T12:00:00Z',
+        },
+      ],
+    },
   })
   @ApiResponse({ status: 403, description: 'Prohibido.' })
   async findAll() {
@@ -64,9 +94,30 @@ export class ProductsController {
   }
 
   @Get(':id')
-  @ApiOperation({ summary: 'Obtener un producto por su id' })
-  @ApiParam({ name: 'id', description: 'Id del producto a buscar' })
-  @ApiResponse({ status: 200, description: 'Producto encontrado.' })
+  @ApiOperation({
+    summary: 'Obtener un producto por su id',
+    description:
+      'Retorna los datos de un producto específico. Requiere autenticación.',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'Id del producto a buscar',
+    example: 'uuid-v4',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Producto encontrado.',
+    schema: {
+      example: {
+        id: 'uuid-v4',
+        name: 'Producto de prueba',
+        image: 'https://www.example.com/image.png',
+        created_by: 'a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6',
+        createdAt: '2024-01-20T12:00:00Z',
+        updatedAt: '2024-01-20T12:00:00Z',
+      },
+    },
+  })
   @ApiResponse({ status: 403, description: 'Prohibido.' })
   @ApiResponse({ status: 404, description: 'Producto no encontrado.' })
   async findOne(@Param('id') id: string) {
@@ -74,20 +125,40 @@ export class ProductsController {
   }
 
   @Patch(':id')
-  @ApiOperation({ summary: 'Actualizar un producto por su id' })
+  @ApiOperation({
+    summary: 'Actualizar un producto por su id',
+    description:
+      'Actualiza los datos de un producto específico. Los campos son opcionales. Requiere autenticación.',
+  })
   @ApiBody({
     type: UpdateProductDto,
     examples: {
-      a: {
-        summary: 'Ejemplo de peticion',
+      actualizacion: {
+        summary: 'Ejemplo de petición',
         value: {
           name: 'Producto actualizado',
         },
       },
     },
   })
-  @ApiParam({ name: 'id', description: 'Id del producto a actualizar' })
-  @ApiResponse({ status: 200, description: 'Producto actualizado.' })
+  @ApiParam({
+    name: 'id',
+    description: 'Id del producto a actualizar',
+    example: 'uuid-v4',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Producto actualizado.',
+    schema: {
+      example: {
+        id: 'uuid-v4',
+        name: 'Producto actualizado',
+        image: 'https://www.example.com/image.png',
+        created_by: 'a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6',
+        updatedAt: '2024-01-20T13:00:00Z',
+      },
+    },
+  })
   @ApiResponse({ status: 403, description: 'Prohibido.' })
   @ApiResponse({ status: 404, description: 'Producto no encontrado.' })
   async update(
@@ -98,8 +169,16 @@ export class ProductsController {
   }
 
   @Delete(':id')
-  @ApiOperation({ summary: 'Eliminar un producto por su id' })
-  @ApiParam({ name: 'id', description: 'Id del producto a eliminar' })
+  @ApiOperation({
+    summary: 'Eliminar un producto por su id',
+    description:
+      'Elimina permanentemente un producto del sistema. Requiere autenticación.',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'Id del producto a eliminar',
+    example: 'uuid-v4',
+  })
   @ApiResponse({ status: 200, description: 'Producto eliminado.' })
   @ApiResponse({ status: 403, description: 'Prohibido.' })
   @ApiResponse({ status: 404, description: 'Producto no encontrado.' })

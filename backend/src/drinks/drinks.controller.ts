@@ -29,12 +29,15 @@ export class DrinksController {
   constructor(private readonly drinksService: DrinksService) {}
 
   @Post()
-  @ApiOperation({ summary: 'Crear una nueva bebida' })
+  @ApiOperation({
+    summary: 'Crear una nueva bebida',
+    description: 'Crea una nueva bebida en el sistema. Requiere autenticación.',
+  })
   @ApiBody({
     type: CreateDrinkDto,
     examples: {
-      a: {
-        summary: 'Ejemplo de peticion',
+      bebida: {
+        summary: 'Ejemplo de petición',
         value: {
           name: 'Bebida de prueba',
           price: '2.99',
@@ -47,6 +50,17 @@ export class DrinksController {
   @ApiResponse({
     status: 201,
     description: 'La bebida ha sido creada exitosamente.',
+    schema: {
+      example: {
+        id: 'uuid-v4',
+        name: 'Bebida de prueba',
+        price: '2.99',
+        image: 'https://www.example.com/image.png',
+        created_by: 'a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6',
+        createdAt: '2024-01-20T12:00:00Z',
+        updatedAt: '2024-01-20T12:00:00Z',
+      },
+    },
   })
   @ApiResponse({ status: 403, description: 'Prohibido.' })
   async create(@Body() createDrinkDto: CreateDrinkDto) {
@@ -54,10 +68,27 @@ export class DrinksController {
   }
 
   @Get()
-  @ApiOperation({ summary: 'Obtener todas las bebidas' })
+  @ApiOperation({
+    summary: 'Obtener todas las bebidas',
+    description:
+      'Retorna la lista de todas las bebidas registradas. Requiere autenticación.',
+  })
   @ApiResponse({
     status: 200,
     description: 'Lista de todas las bebidas.',
+    schema: {
+      example: [
+        {
+          id: 'uuid-v4',
+          name: 'Bebida de prueba',
+          price: '2.99',
+          image: 'https://www.example.com/image.png',
+          created_by: 'a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6',
+          createdAt: '2024-01-20T12:00:00Z',
+          updatedAt: '2024-01-20T12:00:00Z',
+        },
+      ],
+    },
   })
   @ApiResponse({ status: 403, description: 'Prohibido.' })
   async findAll() {
@@ -65,9 +96,31 @@ export class DrinksController {
   }
 
   @Get(':id')
-  @ApiOperation({ summary: 'Obtener una bebida por su id' })
-  @ApiParam({ name: 'id', description: 'Id de la bebida a buscar' })
-  @ApiResponse({ status: 200, description: 'Bebida encontrada.' })
+  @ApiOperation({
+    summary: 'Obtener una bebida por su id',
+    description:
+      'Retorna los datos de una bebida específica. Requiere autenticación.',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'Id de la bebida a buscar',
+    example: 'uuid-v4',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Bebida encontrada.',
+    schema: {
+      example: {
+        id: 'uuid-v4',
+        name: 'Bebida de prueba',
+        price: '2.99',
+        image: 'https://www.example.com/image.png',
+        created_by: 'a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6',
+        createdAt: '2024-01-20T12:00:00Z',
+        updatedAt: '2024-01-20T12:00:00Z',
+      },
+    },
+  })
   @ApiResponse({ status: 403, description: 'Prohibido.' })
   @ApiResponse({ status: 404, description: 'Bebida no encontrada.' })
   async findOne(@Param('id') id: string) {
@@ -75,12 +128,16 @@ export class DrinksController {
   }
 
   @Patch(':id')
-  @ApiOperation({ summary: 'Actualizar una bebida por su id' })
+  @ApiOperation({
+    summary: 'Actualizar una bebida por su id',
+    description:
+      'Actualiza los datos de una bebida específica. Los campos son opcionales. Requiere autenticación.',
+  })
   @ApiBody({
     type: UpdateDrinkDto,
     examples: {
-      a: {
-        summary: 'Ejemplo de peticion',
+      actualizacion: {
+        summary: 'Ejemplo de petición',
         value: {
           name: 'Bebida actualizada',
           price: '3.50',
@@ -88,8 +145,25 @@ export class DrinksController {
       },
     },
   })
-  @ApiParam({ name: 'id', description: 'Id de la bebida a actualizar' })
-  @ApiResponse({ status: 200, description: 'Bebida actualizada.' })
+  @ApiParam({
+    name: 'id',
+    description: 'Id de la bebida a actualizar',
+    example: 'uuid-v4',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Bebida actualizada.',
+    schema: {
+      example: {
+        id: 'uuid-v4',
+        name: 'Bebida actualizada',
+        price: '3.50',
+        image: 'https://www.example.com/image.png',
+        created_by: 'a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6',
+        updatedAt: '2024-01-20T13:00:00Z',
+      },
+    },
+  })
   @ApiResponse({ status: 403, description: 'Prohibido.' })
   @ApiResponse({ status: 404, description: 'Bebida no encontrada.' })
   async update(
@@ -100,8 +174,16 @@ export class DrinksController {
   }
 
   @Delete(':id')
-  @ApiOperation({ summary: 'Eliminar una bebida por su id' })
-  @ApiParam({ name: 'id', description: 'Id de la bebida a eliminar' })
+  @ApiOperation({
+    summary: 'Eliminar una bebida por su id',
+    description:
+      'Elimina permanentemente una bebida del sistema. Requiere autenticación.',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'Id de la bebida a eliminar',
+    example: 'uuid-v4',
+  })
   @ApiResponse({ status: 200, description: 'Bebida eliminada.' })
   @ApiResponse({ status: 403, description: 'Prohibido.' })
   @ApiResponse({ status: 404, description: 'Bebida no encontrada.' })

@@ -29,12 +29,16 @@ export class BillDetailsController {
   constructor(private readonly billDetailsService: BillDetailsService) {}
 
   @Post()
-  @ApiOperation({ summary: 'Crear un nuevo detalle de factura' })
+  @ApiOperation({
+    summary: 'Crear un nuevo detalle de factura',
+    description:
+      'Crea un nuevo detalle de factura con los productos seleccionados. Requiere autenticación.',
+  })
   @ApiBody({
     type: CreateBillDetailDto,
     examples: {
-      a: {
-        summary: 'Ejemplo de peticion',
+      detalle: {
+        summary: 'Ejemplo de petición',
         value: {
           dichesId: 'a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6',
           addId: 'a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6',
@@ -50,6 +54,20 @@ export class BillDetailsController {
   @ApiResponse({
     status: 201,
     description: 'El detalle de factura ha sido creado exitosamente.',
+    schema: {
+      example: {
+        id: 'uuid-v4',
+        dichesId: 'a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6',
+        addId: 'a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6',
+        soucesId: 'a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6',
+        drinksId: 'a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6',
+        chipsId: 'a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6',
+        total: '100.50',
+        created_by: 'a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6',
+        createdAt: '2024-01-20T12:00:00Z',
+        updatedAt: '2024-01-20T12:00:00Z',
+      },
+    },
   })
   @ApiResponse({ status: 403, description: 'Prohibido.' })
   create(@Body() createBillDetailDto: CreateBillDetailDto) {
@@ -57,10 +75,30 @@ export class BillDetailsController {
   }
 
   @Get()
-  @ApiOperation({ summary: 'Obtener todos los detalles de factura' })
+  @ApiOperation({
+    summary: 'Obtener todos los detalles de factura',
+    description:
+      'Retorna la lista de todos los detalles de factura registrados. Requiere autenticación.',
+  })
   @ApiResponse({
     status: 200,
     description: 'Lista de todos los detalles de factura.',
+    schema: {
+      example: [
+        {
+          id: 'uuid-v4',
+          dichesId: 'a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6',
+          addId: 'a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6',
+          soucesId: 'a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6',
+          drinksId: 'a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6',
+          chipsId: 'a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6',
+          total: '100.50',
+          created_by: 'a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6',
+          createdAt: '2024-01-20T12:00:00Z',
+          updatedAt: '2024-01-20T12:00:00Z',
+        },
+      ],
+    },
   })
   @ApiResponse({ status: 403, description: 'Prohibido.' })
   findAll() {
@@ -68,9 +106,34 @@ export class BillDetailsController {
   }
 
   @Get(':id')
-  @ApiOperation({ summary: 'Obtener un detalle de factura por su id' })
-  @ApiParam({ name: 'id', description: 'Id del detalle de factura a buscar' })
-  @ApiResponse({ status: 200, description: 'Detalle de factura encontrado.' })
+  @ApiOperation({
+    summary: 'Obtener un detalle de factura por su id',
+    description:
+      'Retorna los datos de un detalle de factura específico. Requiere autenticación.',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'Id del detalle de factura a buscar',
+    example: 'uuid-v4',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Detalle de factura encontrado.',
+    schema: {
+      example: {
+        id: 'uuid-v4',
+        dichesId: 'a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6',
+        addId: 'a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6',
+        soucesId: 'a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6',
+        drinksId: 'a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6',
+        chipsId: 'a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6',
+        total: '100.50',
+        created_by: 'a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6',
+        createdAt: '2024-01-20T12:00:00Z',
+        updatedAt: '2024-01-20T12:00:00Z',
+      },
+    },
+  })
   @ApiResponse({ status: 403, description: 'Prohibido.' })
   @ApiResponse({
     status: 404,
@@ -81,12 +144,16 @@ export class BillDetailsController {
   }
 
   @Patch(':id')
-  @ApiOperation({ summary: 'Actualizar un detalle de factura por su id' })
+  @ApiOperation({
+    summary: 'Actualizar un detalle de factura por su id',
+    description:
+      'Actualiza los datos de un detalle de factura específico. Los campos son opcionales. Requiere autenticación.',
+  })
   @ApiBody({
     type: UpdateBillDetailDto,
     examples: {
-      a: {
-        summary: 'Ejemplo de peticion',
+      actualizacion: {
+        summary: 'Ejemplo de petición',
         value: {
           total: '150.00',
         },
@@ -96,8 +163,25 @@ export class BillDetailsController {
   @ApiParam({
     name: 'id',
     description: 'Id del detalle de factura a actualizar',
+    example: 'uuid-v4',
   })
-  @ApiResponse({ status: 200, description: 'Detalle de factura actualizado.' })
+  @ApiResponse({
+    status: 200,
+    description: 'Detalle de factura actualizado.',
+    schema: {
+      example: {
+        id: 'uuid-v4',
+        dichesId: 'a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6',
+        addId: 'a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6',
+        soucesId: 'a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6',
+        drinksId: 'a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6',
+        chipsId: 'a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6',
+        total: '150.00',
+        created_by: 'a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6',
+        updatedAt: '2024-01-20T13:00:00Z',
+      },
+    },
+  })
   @ApiResponse({ status: 403, description: 'Prohibido.' })
   @ApiResponse({
     status: 404,
@@ -111,8 +195,16 @@ export class BillDetailsController {
   }
 
   @Delete(':id')
-  @ApiOperation({ summary: 'Eliminar un detalle de factura por su id' })
-  @ApiParam({ name: 'id', description: 'Id del detalle de factura a eliminar' })
+  @ApiOperation({
+    summary: 'Eliminar un detalle de factura por su id',
+    description:
+      'Elimina permanentemente un detalle de factura del sistema. Requiere autenticación.',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'Id del detalle de factura a eliminar',
+    example: 'uuid-v4',
+  })
   @ApiResponse({ status: 200, description: 'Detalle de factura eliminado.' })
   @ApiResponse({ status: 403, description: 'Prohibido.' })
   @ApiResponse({

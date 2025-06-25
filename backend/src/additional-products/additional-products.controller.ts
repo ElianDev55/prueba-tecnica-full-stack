@@ -31,12 +31,16 @@ export class AdditionalProductsController {
   ) {}
 
   @Post()
-  @ApiOperation({ summary: 'Crear un nuevo producto adicional' })
+  @ApiOperation({
+    summary: 'Crear un nuevo producto adicional',
+    description:
+      'Crea un nuevo producto adicional en el sistema. Requiere autenticación.',
+  })
   @ApiBody({
     type: CreateAdditionalProductDto,
     examples: {
-      a: {
-        summary: 'Ejemplo de peticion',
+      producto: {
+        summary: 'Ejemplo de petición',
         value: {
           name: 'Producto adicional de prueba',
           price: '1.99',
@@ -48,6 +52,16 @@ export class AdditionalProductsController {
   @ApiResponse({
     status: 201,
     description: 'El producto adicional ha sido creado exitosamente.',
+    schema: {
+      example: {
+        id: 'uuid-v4',
+        name: 'Producto adicional de prueba',
+        price: '1.99',
+        created_by: 'a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6',
+        createdAt: '2024-01-20T12:00:00Z',
+        updatedAt: '2024-01-20T12:00:00Z',
+      },
+    },
   })
   @ApiResponse({ status: 403, description: 'Prohibido.' })
   async create(@Body() createAdditionalProductDto: CreateAdditionalProductDto) {
@@ -57,10 +71,26 @@ export class AdditionalProductsController {
   }
 
   @Get()
-  @ApiOperation({ summary: 'Obtener todos los productos adicionales' })
+  @ApiOperation({
+    summary: 'Obtener todos los productos adicionales',
+    description:
+      'Retorna la lista de todos los productos adicionales registrados. Requiere autenticación.',
+  })
   @ApiResponse({
     status: 200,
     description: 'Lista de todos los productos adicionales.',
+    schema: {
+      example: [
+        {
+          id: 'uuid-v4',
+          name: 'Producto adicional de prueba',
+          price: '1.99',
+          created_by: 'a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6',
+          createdAt: '2024-01-20T12:00:00Z',
+          updatedAt: '2024-01-20T12:00:00Z',
+        },
+      ],
+    },
   })
   @ApiResponse({ status: 403, description: 'Prohibido.' })
   async findAll() {
@@ -68,12 +98,30 @@ export class AdditionalProductsController {
   }
 
   @Get(':id')
-  @ApiOperation({ summary: 'Obtener un producto adicional por su id' })
+  @ApiOperation({
+    summary: 'Obtener un producto adicional por su id',
+    description:
+      'Retorna los datos de un producto adicional específico. Requiere autenticación.',
+  })
   @ApiParam({
     name: 'id',
     description: 'Id del producto adicional a buscar',
+    example: 'uuid-v4',
   })
-  @ApiResponse({ status: 200, description: 'Producto adicional encontrado.' })
+  @ApiResponse({
+    status: 200,
+    description: 'Producto adicional encontrado.',
+    schema: {
+      example: {
+        id: 'uuid-v4',
+        name: 'Producto adicional de prueba',
+        price: '1.99',
+        created_by: 'a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6',
+        createdAt: '2024-01-20T12:00:00Z',
+        updatedAt: '2024-01-20T12:00:00Z',
+      },
+    },
+  })
   @ApiResponse({ status: 403, description: 'Prohibido.' })
   @ApiResponse({
     status: 404,
@@ -84,12 +132,16 @@ export class AdditionalProductsController {
   }
 
   @Patch(':id')
-  @ApiOperation({ summary: 'Actualizar un producto adicional por su id' })
+  @ApiOperation({
+    summary: 'Actualizar un producto adicional por su id',
+    description:
+      'Actualiza los datos de un producto adicional específico. Los campos son opcionales. Requiere autenticación.',
+  })
   @ApiBody({
     type: UpdateAdditionalProductDto,
     examples: {
-      a: {
-        summary: 'Ejemplo de peticion',
+      actualizacion: {
+        summary: 'Ejemplo de petición',
         value: {
           name: 'Producto adicional actualizado',
           price: '2.50',
@@ -100,8 +152,21 @@ export class AdditionalProductsController {
   @ApiParam({
     name: 'id',
     description: 'Id del producto adicional a actualizar',
+    example: 'uuid-v4',
   })
-  @ApiResponse({ status: 200, description: 'Producto adicional actualizado.' })
+  @ApiResponse({
+    status: 200,
+    description: 'Producto adicional actualizado.',
+    schema: {
+      example: {
+        id: 'uuid-v4',
+        name: 'Producto adicional actualizado',
+        price: '2.50',
+        created_by: 'a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6',
+        updatedAt: '2024-01-20T13:00:00Z',
+      },
+    },
+  })
   @ApiResponse({ status: 403, description: 'Prohibido.' })
   @ApiResponse({
     status: 404,
@@ -118,10 +183,15 @@ export class AdditionalProductsController {
   }
 
   @Delete(':id')
-  @ApiOperation({ summary: 'Eliminar un producto adicional por su id' })
+  @ApiOperation({
+    summary: 'Eliminar un producto adicional por su id',
+    description:
+      'Elimina permanentemente un producto adicional del sistema. Requiere autenticación.',
+  })
   @ApiParam({
     name: 'id',
     description: 'Id del producto adicional a eliminar',
+    example: 'uuid-v4',
   })
   @ApiResponse({ status: 200, description: 'Producto adicional eliminado.' })
   @ApiResponse({ status: 403, description: 'Prohibido.' })

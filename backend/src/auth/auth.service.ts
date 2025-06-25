@@ -9,7 +9,7 @@ import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { UsersService } from 'src/users/users.service';
 import { jwtConstants } from './constants';
-import { LoginDto } from './dto/login.dto';
+import { LoginDto, ValidateJwtDto } from './dto/login.dto';
 
 @Injectable()
 export class AuthService {
@@ -49,9 +49,9 @@ export class AuthService {
     };
   }
 
-  async validateToken(token: string) {
+  async validateToken(token: ValidateJwtDto) {
     try {
-      const payload = await this.jwtService.verifyAsync(token, {
+      const payload = await this.jwtService.verifyAsync(token.token, {
         secret: jwtConstants.secret,
       });
       return payload;

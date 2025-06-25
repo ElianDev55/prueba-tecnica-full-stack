@@ -30,7 +30,11 @@ export class ProductsEntity {
   is_deleted: boolean;
 
   //Relations
+
+  @Column({ type: 'uuid', nullable: true })
+  created_by: string;
+
   @ManyToOne(() => UserEntity)
   @JoinColumn({ name: 'created_by' })
-  created_by: string;
+  createdBy: UserEntity;
 }

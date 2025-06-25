@@ -16,10 +16,6 @@ export class DishesDetailsEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne(() => UserEntity)
-  @JoinColumn({ name: 'created_by' })
-  created_by: string;
-
   @ManyToOne(() => DishesEntity)
   @JoinColumn({ name: 'dishes_id' })
   dishes_id: DishesEntity;
@@ -38,4 +34,11 @@ export class DishesDetailsEntity {
   is_deleted: boolean;
 
   //Relations
+
+  @Column({ type: 'uuid', nullable: true })
+  created_by: string;
+
+  @ManyToOne(() => UserEntity)
+  @JoinColumn({ name: 'created_by' })
+  createdBy: UserEntity;
 }

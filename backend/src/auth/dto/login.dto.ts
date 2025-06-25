@@ -11,3 +11,10 @@ export class LoginDto {
   @IsString()
   password: string;
 }
+
+export class ValidateJwtDto {
+  @IsDefined()
+  @IsNotEmpty()
+  @IsString()
+  token: string;
+}
